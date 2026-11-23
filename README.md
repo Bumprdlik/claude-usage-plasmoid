@@ -44,3 +44,7 @@ Bar colour follows the theme's highlight colour, turning orange at 80% and red a
 - `claude-statusline` — Claude Code status line script (bash + jq)
 - `package/` — the Plasma applet (`metadata.json`, `contents/ui/main.qml`)
 - `install.sh` — symlinks both into place
+
+## License
+
+MIT, see [LICENSE](LICENSE).
