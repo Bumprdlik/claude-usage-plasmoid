@@ -15,7 +15,7 @@ The widget reads that file every 15 seconds.
 So the numbers are only as fresh as your last Claude Code reply. Usage on claude.ai
 or in Claude Desktop counts toward the same limits, but shows up here only after the
 next reply in Claude Code. The widget greys out when its data is over an hour old,
-and a window past its reset time is shown as 0 %.
+and a window past its reset time is shown as 0%.
 
 No tokens or credentials are read; nothing is sent anywhere.
 
@@ -37,12 +37,10 @@ and `claude-statusline` to `~/.local/bin/`. Then add to `~/.claude/settings.json
 and add **Claude Usage** to a panel (right-click the panel → Add or Manage Widgets).
 
 In a vertical panel the widget takes the full panel width; click it for details.
-Bar colour follows the theme's highlight colour, turning orange at 80 % and red at 95 %.
+Bar colour follows the theme's highlight colour, turning orange at 80% and red at 95%.
 
 ## Files
 
 - `claude-statusline` — Claude Code status line script (bash + jq)
 - `package/` — the Plasma applet (`metadata.json`, `contents/ui/main.qml`)
 - `install.sh` — symlinks both into place
-
-The widget's labels are in Czech.

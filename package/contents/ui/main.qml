@@ -39,24 +39,24 @@ PlasmoidItem {
         if (p >= 80) return Kirigami.Theme.neutralTextColor
         return Kirigami.Theme.highlightColor
     }
-    function fmtPct(p) { return Math.round(p) + " %" }
+    function fmtPct(p) { return Math.round(p) + "%" }
     function fmtReset(ts, withDay) {
         if (!ts) return "—"
         var d = new Date(ts * 1000)
-        return "Reset " + Qt.locale().toString(d, withDay ? "ddd HH:mm" : "HH:mm")
+        return "Resets " + Qt.locale("en_GB").toString(d, withDay ? "dddd HH:mm" : "HH:mm")
     }
     function fmtAge(s) {
-        if (s < 0) return "zatím žádná data"
-        if (s < 90) return "aktualizováno před chvílí"
-        if (s < 5400) return "aktualizováno před " + Math.round(s / 60) + " min"
-        if (s < 172800) return "aktualizováno před " + Math.round(s / 3600) + " h"
-        return "aktualizováno před " + Math.round(s / 86400) + " dny"
+        if (s < 0) return "No data yet"
+        if (s < 90) return "Updated just now"
+        if (s < 5400) return "Updated " + Math.round(s / 60) + " min ago"
+        if (s < 172800) return "Updated " + Math.round(s / 3600) + " h ago"
+        return "Updated " + Math.round(s / 86400) + " days ago"
     }
 
     toolTipMainText: "Claude"
     toolTipSubText: usage
-        ? "Session: " + fmtPct(sessionPct) + " · týden: " + fmtPct(weekPct) + "\n" + fmtAge(age)
-        : "Zatím žádná data — spusť Claude Code"
+        ? "Session: " + fmtPct(sessionPct) + " · week: " + fmtPct(weekPct) + "\n" + fmtAge(age)
+        : "No data yet — use Claude Code"
 
     P5Support.DataSource {
         id: exec
@@ -131,7 +131,7 @@ PlasmoidItem {
         PlasmaComponents.Label {
             Layout.preferredWidth: Kirigami.Units.gridUnit * 5
             horizontalAlignment: Text.AlignRight
-            text: "využito " + root.fmtPct(pct)
+            text: root.fmtPct(pct) + " used"
             opacity: 0.7
         }
     }
@@ -155,7 +155,7 @@ PlasmoidItem {
             }
             spacing: Kirigami.Units.smallSpacing
             MiniRow { Layout.fillWidth: true; label: "5h"; pct: root.sessionPct }
-            MiniRow { Layout.fillWidth: true; label: "týden"; pct: root.weekPct }
+            MiniRow { Layout.fillWidth: true; label: "week"; pct: root.weekPct }
         }
     }
 
@@ -164,16 +164,16 @@ PlasmoidItem {
         Layout.minimumWidth: Kirigami.Units.gridUnit * 20
         spacing: Kirigami.Units.largeSpacing
 
-        Kirigami.Heading { text: "Využití Claude"; level: 4 }
+        Kirigami.Heading { text: "Claude usage"; level: 4 }
         BigRow {
             Layout.fillWidth: true
-            title: "Aktuální session"
+            title: "Current session"
             sub: root.fmtReset(root.sessionReset, false)
             pct: root.sessionPct
         }
         BigRow {
             Layout.fillWidth: true
-            title: "Tento týden"
+            title: "This week"
             sub: root.fmtReset(root.weekReset, true)
             pct: root.weekPct
         }
@@ -182,7 +182,7 @@ PlasmoidItem {
             wrapMode: Text.Wrap
             font: Kirigami.Theme.smallFont
             opacity: 0.6
-            text: root.fmtAge(root.age) + ". Data se obnovují při každé odpovědi v Claude Code."
+            text: root.fmtAge(root.age) + ". Refreshed on every Claude Code reply."
         }
     }
 }

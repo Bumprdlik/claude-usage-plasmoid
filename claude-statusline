@@ -14,10 +14,10 @@ if [[ -n $rl && $rl != "{}" ]]; then
 fi
 
 jq -r '
-  def pct(w): if w then "\(w.used_percentage | floor) %" else "0 %" end;
+  def pct(w): if w then "\(w.used_percentage | floor)%" else "0%" end;
   def at(w):  if w and w.resets_at then " (→\(w.resets_at | localtime | strftime("%H:%M")))" else "" end;
   [ (.model.display_name // empty),
     (if .rate_limits then
-       "5h \(pct(.rate_limits.five_hour))\(at(.rate_limits.five_hour)) · týden \(pct(.rate_limits.seven_day))"
+       "5h \(pct(.rate_limits.five_hour))\(at(.rate_limits.five_hour)) · week \(pct(.rate_limits.seven_day))"
      else empty end)
   ] | join(" · ")' <<<"$in" 2>/dev/null
