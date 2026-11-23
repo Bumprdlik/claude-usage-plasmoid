@@ -1,0 +1,12 @@
+{
+    "KPlugin": {
+        "Category": "System Information",
+        "Description": "Claude plan usage (5h session + week) from Claude Code's status line",
+        "Icon": "utilities-system-monitor",
+        "Id": "org.local.claudeusage",
+        "Name": "Claude Usage",
+        "Version": "1.0"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0",
+    "KPackageStructure": "Plasma/Applet"
+}

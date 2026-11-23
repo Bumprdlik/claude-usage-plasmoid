@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Claude Code status line.
+# Shows plan usage (5h window + week) and saves it to ~/.cache/claude-usage.json
+# for the Plasma panel widget "Claude Usage" (org.local.claudeusage).
+# Wired in ~/.claude/settings.json -> statusLine.command.
+
+in=$(cat)
+cache="${XDG_CACHE_HOME:-$HOME/.cache}/claude-usage.json"
+
+rl=$(jq -c '.rate_limits // empty' <<<"$in" 2>/dev/null)
+if [[ -n $rl && $rl != "{}" ]]; then
+  tmp="$cache.$$"
+  jq -c --argjson now "$(date +%s)" '{updated: $now} + .' <<<"$rl" >"$tmp" && mv -f "$tmp" "$cache"
+fi
+
+jq -r '
+  def pct(w): if w then "\(w.used_percentage | floor) %" else "0 %" end;
+  def at(w):  if w and w.resets_at then " (→\(w.resets_at | localtime | strftime("%H:%M")))" else "" end;
+  [ (.model.display_name // empty),
+    (if .rate_limits then
+       "5h \(pct(.rate_limits.five_hour))\(at(.rate_limits.five_hour)) · týden \(pct(.rate_limits.seven_day))"
+     else empty end)
+  ] | join(" · ")' <<<"$in" 2>/dev/null
